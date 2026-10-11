@@ -1,0 +1,48 @@
+PHASE 1: API Conformance
+STATUS:  partial
+TIME:    150.8s
+================================================================
+
+{
+  "endpoint_checks": [
+    {
+      "name": "GET /health",
+      "passed": true,
+      "detail": "HTTP 200"
+    },
+    {
+      "name": "GET /events/geocode",
+      "passed": true,
+      "detail": "HTTP 200 lat=39.100105 lon=-94.5781416"
+    },
+    {
+      "name": "GET /events/search",
+      "passed": true,
+      "detail": "HTTP 200, returned=20, total=777"
+    },
+    {
+      "name": "GET /travel/plan",
+      "passed": false,
+      "detail": "HTTP 409 - {'detail': 'Set your location before searching or planning travel'}"
+    }
+  ],
+  "degradation_checks": [
+    {
+      "name": "travel/plan without destination -> 400",
+      "passed": true,
+      "detail": "HTTP 400"
+    },
+    {
+      "name": "events/search with latitude=999 -> 4xx",
+      "passed": true,
+      "detail": "HTTP 422"
+    },
+    {
+      "name": "geocode of nonsense place -> no 5xx",
+      "passed": true,
+      "detail": "HTTP 404"
+    }
+  ],
+  "overall": "partial",
+  "summary": "6/7 checks passed. Failed: GET /travel/plan (HTTP 409 - {'detail': 'Set your location before searching or planning travel'})"
+}

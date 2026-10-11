@@ -1,0 +1,74 @@
+PHASE 2: Frontend QA
+STATUS:  partial
+TIME:    184.3s
+================================================================
+
+{
+  "steps": [
+    {
+      "step": 1,
+      "action": "load https://hackmidwest2026eventsapp.github.io/events-ui/",
+      "passed": true,
+      "page_text_snippet": "HTTP 200 | title: my-react-app | 'Discover Events' heading rendered",
+      "error": null
+    },
+    {
+      "step": 2,
+      "action": "keyword and city boxes are present",
+      "passed": true,
+      "page_text_snippet": "keyword box ('Search events...') and city box ('Enter a city...') are present",
+      "error": null
+    },
+    {
+      "step": 3,
+      "action": "enter city 'Kansas City, MO'",
+      "passed": true,
+      "page_text_snippet": "entered 'Kansas City, MO' (fill); badge (0, 0) -> 20 of 1152",
+      "error": null
+    },
+    {
+      "step": 4,
+      "action": "event cards render (title, date, address)",
+      "passed": true,
+      "page_text_snippet": "20 dated event cards visible (badge 20 of 1152); first date 2026-10-11T16:00; first title 'Kansas City Super Show'",
+      "error": null
+    },
+    {
+      "step": 5,
+      "action": "browser reaches the backend (no CORS / 5xx)",
+      "passed": true,
+      "page_text_snippet": "2 backend call(s) OK, e.g. 200 GET midwest-hackaton-api-git-main-rand-brown.vercel.app/api/v1/events/geocode",
+      "error": null
+    },
+    {
+      "step": 6,
+      "action": "keyword search 'music' changes the results",
+      "passed": true,
+      "page_text_snippet": "'music': badge (20, 1152) -> (15, 1160)",
+      "error": null
+    },
+    {
+      "step": 7,
+      "action": "nonsense keyword shows the empty state",
+      "passed": true,
+      "page_text_snippet": "nonsense keyword -> 'No events' message shown",
+      "error": null
+    },
+    {
+      "step": 8,
+      "action": "clearing the keyword restores results",
+      "passed": true,
+      "page_text_snippet": "results restored: 0 of 1160",
+      "error": null
+    },
+    {
+      "step": 9,
+      "action": "click an event card -> detail opens",
+      "passed": false,
+      "page_text_snippet": "Discover Events Find things to do, people to meet, and places to explore. Location permission denied. Enter a city. Upcoming Events 20 OF 1152 EVENTS Showing th",
+      "error": "RuntimeError: clicking an event card opened nothing (no new URL, dialog or view)"
+    }
+  ],
+  "overall": "partial",
+  "summary": "8/9 steps passed (react UI at https://hackmidwest2026eventsapp.github.io/events-ui/). First failure - step 9: RuntimeError: clicking an event card opened nothing (no new URL, dialog or view)"
+}

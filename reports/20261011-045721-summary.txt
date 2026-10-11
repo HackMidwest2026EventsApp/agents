@@ -1,0 +1,180 @@
+# CONSOLIDATED REPORT
+run: 20261011-045721
+total: 501s
+
+--- PHASE 1: API CONFORMANCE ---
+status: partial  time: 151s
+{
+  "endpoint_checks": [
+    {
+      "name": "GET /health",
+      "passed": true,
+      "detail": "HTTP 200"
+    },
+    {
+      "name": "GET /events/geocode",
+      "passed": true,
+      "detail": "HTTP 200 lat=39.100105 lon=-94.5781416"
+    },
+    {
+      "name": "GET /events/search",
+      "passed": true,
+      "detail": "HTTP 200, returned=20, total=777"
+    },
+    {
+      "name": "GET /travel/plan",
+      "passed": false,
+      "detail": "HTTP 409 - {'detail': 'Set your location before searching or planning travel'}"
+    }
+  ],
+  "degradation_checks": [
+    {
+      "name": "travel/plan without destination -> 400",
+      "passed": true,
+      "detail": "HTTP 400"
+    },
+    {
+      "name": "events/search with latitude=999 -> 4xx",
+      "passed": true,
+      "detail": "HTTP 422"
+    },
+    {
+      "name": "geocode of nonsense place -> no 5xx",
+      "passed": true,
+      "detail": "HTTP 404"
+    }
+  ],
+  "overall": "partial",
+  "summary": "6/7 checks passed. Failed: GET /travel/plan (HTTP 409 - {'detail': 'Set your location before searching or planning travel'})"
+}
+
+--- PHASE 2: FRONTEND QA ---
+status: partial  time: 184s
+{
+  "steps": [
+    {
+      "step": 1,
+      "action": "load https://hackmidwest2026eventsapp.github.io/events-ui/",
+      "passed": true,
+      "page_text_snippet": "HTTP 200 | title: my-react-app | 'Discover Events' heading rendered",
+      "error": null
+    },
+    {
+      "step": 2,
+      "action": "keyword and city boxes are present",
+      "passed": true,
+      "page_text_snippet": "keyword box ('Search events...') and city box ('Enter a city...') are present",
+      "error": null
+    },
+    {
+      "step": 3,
+      "action": "enter city 'Kansas City, MO'",
+      "passed": true,
+      "page_text_snippet": "entered 'Kansas City, MO' (fill); badge (0, 0) -> 20 of 1152",
+      "error": null
+    },
+    {
+      "step": 4,
+      "action": "event cards render (title, date, address)",
+      "passed": true,
+      "page_text_snippet": "20 dated event cards visible (badge 20 of 1152); first date 2026-10-11T16:00; first title 'Kansas City Super Show'",
+      "error": null
+    },
+    {
+      "step": 5,
+      "action": "browser reaches the backend (no CORS / 5xx)",
+      "passed": true,
+      "page_text_snippet": "2 backend call(s) OK, e.g. 200 GET midwest-hackaton-api-git-main-rand-brown.vercel.app/api/v1/events/geocode",
+      "error": null
+    },
+    {
+      "step": 6,
+      "action": "keyword search 'music' changes the results",
+      "passed": true,
+      "page_text_snippet": "'music': badge (20, 1152) -> (15, 1160)",
+      "error": null
+    },
+    {
+      "step": 7,
+      "action": "nonsense keyword shows the empty state",
+      "passed": true,
+      "page_text_snippet": "nonsense keyword -> 'No events' message shown",
+      "error": null
+    },
+    {
+      "step": 8,
+      "action": "clearing the keyword restores results",
+      "passed": true,
+      "page_text_snippet": "results restored: 0 of 1160",
+      "error": null
+    },
+    {
+      "step": 9,
+      "action": "click an event card -> detail opens",
+      "passed": false,
+      "page_text_snippet": "Discover Events Find things to do, people to meet, and places to explore. Location permission denied. Enter a city. Upcoming Events 20 OF 1152 EVENTS Showing th",
+      "error": "RuntimeError: clicking an event card opened nothing (no new URL, dialog or view)"
+    }
+  ],
+  "overall": "partial",
+  "summary": "8/9 steps passed (react UI at https://hackmidwest2026eventsapp.github.io/events-ui/). First failure - step 9: RuntimeError: clicking an event card opened nothing (no new URL, dialog or view)"
+}
+
+--- PHASE 3: END-TO-END ---
+status: partial  time: 163s
+{
+  "checks": [
+    {
+      "name": "API: geocode 'Kansas City, MO'",
+      "passed": true,
+      "detail": "HTTP 200 lat=39.100105 lon=-94.5781416"
+    },
+    {
+      "name": "API: events search near the geocoded point",
+      "passed": true,
+      "detail": "HTTP 200, returned=20, total=777"
+    },
+    {
+      "name": "API: travel plan to 'Union Station, Kansas City'",
+      "passed": false,
+      "detail": "HTTP 409 - {'detail': 'Set your location before searching or planning travel'}"
+    },
+    {
+      "name": "UI: load https://hackmidwest2026eventsapp.github.io/events-ui/",
+      "passed": true,
+      "detail": "HTTP 200 | title: my-react-app | 'Discover Events' heading rendered"
+    },
+    {
+      "name": "UI: keyword and city boxes are present",
+      "passed": true,
+      "detail": "keyword box ('Search events...') and city box ('Enter a city...') are present"
+    },
+    {
+      "name": "UI: enter city 'Kansas City, MO'",
+      "passed": true,
+      "detail": "entered 'Kansas City, MO' (fill); badge (0, 0) -> 20 of 1152"
+    },
+    {
+      "name": "UI: event cards render (title, date, address)",
+      "passed": true,
+      "detail": "20 dated event cards visible (badge 20 of 1152); first date 2026-10-11T16:00; first title 'Kansas City Super Show'"
+    },
+    {
+      "name": "UI: browser reaches the backend (no CORS / 5xx)",
+      "passed": true,
+      "detail": "2 backend call(s) OK, e.g. 200 GET midwest-hackaton-api-git-main-rand-brown.vercel.app/api/v1/events/geocode"
+    },
+    {
+      "name": "UI: click an event card -> detail opens",
+      "passed": true,
+      "detail": "opened via url change: https://hackmidwest2026eventsapp.github.io/events-ui/fGVHwxIQRvg-001 | heading 'Kansas City Super Show' | sections: What to wear, Nearby"
+    },
+    {
+      "name": "API and UI both list events for the same city",
+      "passed": true,
+      "detail": "API total=777 (10 mi); UI badge=20 of 1152"
+    }
+  ],
+  "overall": "partial",
+  "summary": "9/10 checks passed. First failure - API: travel plan to 'Union Station, Kansas City': HTTP 409 - {'detail': 'Set your location before searching or planning travel'}"
+}
