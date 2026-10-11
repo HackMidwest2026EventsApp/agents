@@ -46,29 +46,6 @@ python demo.py                          # recorded demo, no LLM
 
 Copy `.env.example` to `.env` and set these. URLs must not have a trailing slash, and there must be no spaces around `=`.
 
-The GitHub Pages sub-path (`/events-ui`) belongs in `FRONTEND_BASE_URL`, with `UI_PATH=/`.
-
-Optional settings (defaults shown):
-
-| Variable | Default | Purpose |
-|---|---|---|
-| `UI_PATH` | `/` | Path appended to `FRONTEND_BASE_URL` |
-| `UI_MODE` | auto | `react` (deployed app) or `dev` (the backend's bundled `/ui/` page). Auto-detected from `UI_PATH` |
-| `UI_CITY` | `Kansas City, MO` | City used in UI flows |
-| `UI_KEYWORD` | `music` | Keyword used in the UI search step |
-| `OLLAMA_MODEL` | `qwen3:4b-instruct` | Model used if unset in `.env` |
-| `OLLAMA_NUM_CTX` | `4096` | Context window |
-| `OLLAMA_NUM_THREAD` | unset | CPU threads for Ollama |
-| `OLLAMA_KEEP_ALIVE` | `30m` | How long the model stays loaded |
-| `OLLAMA_THINK` | `auto` | `auto` turns off thinking for Qwen3 non-instruct models; `off` always disables it |
-| `LLM_TIMEOUT_S` | `600` | Per-request Ollama timeout |
-| `PHASE_TIMEOUT_S` | `420` | Per-agent timeout in the orchestrator |
-| `MAX_TOOL_CALLS` | `8` | Hard cap on tool calls per agent run |
-| `SUMMARY_MAX_TOKENS` | `900` | Output token cap per agent |
-| `HTTP_TIMEOUT_S` | `60` | HTTP client timeout |
-| `NAV_TIMEOUT_S` | `60` | Browser navigation timeout |
-| `RECORDINGS_DIR` | `recordings` | Where demo recordings are written |
-
 ## How the Strands SDK is used
 
 - **`Agent` + `OllamaModel`**: three agents built by a shared constructor in `agents.py`, all pointed at a local model with temperature 0.
