@@ -1,4 +1,4 @@
-# Strands Conformance Agent
+# Strands Agent
 
 Built for **Hack Midwest 2026** under the judging criterion 
 
