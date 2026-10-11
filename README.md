@@ -76,13 +76,6 @@ Optional settings (defaults shown):
 - **Hooks**: `BeforeToolCallEvent` prints each call and enforces the tool-call budget by cancelling calls past `MAX_TOOL_CALLS`. `AfterToolCallEvent` prints how long each tool took.
 - **Async invocation**: the orchestrator runs agents with `invoke_async` under a timeout and reports token usage and model calls per phase.
 
-Example trace from a phase:
-
-```
-  → api_conformance_suite()
-  ← api_conformance_suite done in 6.2s
-  [agent finished in 41s; 1180 tokens in / 96 out, 2 model call(s)]
-```
 
 ## Design
 
