@@ -103,7 +103,7 @@ demo.py           Recorded walkthrough, no LLM
 smoke_test.py     Minimal Strands + Ollama connectivity check
 requirements.txt  Pinned dependencies
 .env.example      Config template
-```
+
 
 To verify that Strands can reach Ollama before running anything else, run `python smoke_test.py`. It asks the model to use an `add` tool to compute 2 + 3 (it uses `qwen3:4b`).
 
